@@ -18,7 +18,7 @@ const {
   Alert
 } = ReactNative;
 
-class HomePage extends Component {
+class MenuPage extends Component {
   constructor(props) {
     super(props);
     this.state = {

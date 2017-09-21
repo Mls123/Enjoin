@@ -3,7 +3,10 @@ import { ActivityIndicator, AsyncStorage, StyleSheet, Text, View } from 'react-n
 import {Router, Scene} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import Authentication from './components/Authentication';
-import HomePage from './components/HomePage';
+import MenuPage from './components/MenuPage';
+import CashRegistrePage from './components/CashRegistrePage';
+import ProfilePage from './components/ProfilePage';
+import SearchPage from './components/SearchPage';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAhMq5JhRJA8mOyKWoLi2qHrZ2RVj6OMo0",
