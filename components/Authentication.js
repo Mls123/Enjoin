@@ -37,7 +37,7 @@ class Authentication extends Component {
       });
     })
     .catch((err) => {
-        //Login was not successful, let's create a new account
+        //Login was not successful, let's create a new account (opret ny bruger, skal flyttes)
         firebase.auth().createUserWithEmailAndPassword(username, password)
         .then(() => { 
           this.setState({ error: '', loading: false });

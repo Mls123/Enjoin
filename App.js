@@ -6,12 +6,12 @@ import Authentication from './components/Authentication';
 import HomePage from './components/HomePage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAbQn5CP8cU80pFhrmmTmDw5w9SOc_QfGE",
-  authDomain: "securedbase-d861b.firebaseapp.com",
-  databaseURL: "https://securedbase-d861b.firebaseio.com",
-  projectId: "securedbase-d861b",
-  storageBucket: "securedbase-d861b.appspot.com",
-  messagingSenderId: "3497891805"
+  apiKey: "AIzaSyAhMq5JhRJA8mOyKWoLi2qHrZ2RVj6OMo0",
+  authDomain: "enjoin-2017.firebaseapp.com",
+  databaseURL: "https://enjoin-2017.firebaseio.com",
+  projectId: "enjoin-2017",
+  storageBucket: "enjoin-2017.appspot.com",
+  messagingSenderId: "243125328635"
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 console.ignoredYellowBox = [
@@ -35,6 +35,7 @@ export default class App extends Component {
       )
     } else {
       return (
+        //indsæt vores scener/ hvilke scener skal vi have? 
         <Router>
           <Scene key='root'>
             <Scene
