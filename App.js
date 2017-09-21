@@ -46,11 +46,32 @@ export default class App extends Component {
               title='Authentication'
             />
             <Scene
-              component={HomePage}
+              component={SearchPage}
               hideNavBar={true}
               initial={this.state.hasToken}
-              key='HomePage'
-              title='Home Page'
+              key='SearchPage'
+              title='Search Page'
+            />
+            <Scene
+              component={MenuPage}
+              hideNavBar={true}
+              initial={this.state.hasToken}
+              key='MenuPage'
+              title='Menu Page'
+            />
+            <Scene
+              component={ProfilePage}
+              hideNavBar={true}
+              initial={this.state.hasToken}
+              key='ProfilePage'
+              title='Profile Page'
+            />
+            <Scene
+              component={CashRegistrePage}
+              hideNavBar={true}
+              initial={this.state.hasToken}
+              key='CashRegistrePage'
+              title='CashRegistre Page'
             />
           </Scene>
         </Router>

@@ -30,14 +30,14 @@ class Authentication extends Component {
         AsyncStorage.setItem('id_token', idToken);
         console.log(idToken);
         Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
-        Actions.HomePage();
+        Actions.SearchPage();
       })
       .catch((err) => {
         this.setState({ error: 'Failed to obtain user ID token.'+err, loading: false });
       });
     })
     .catch((err) => {
-        //Login was not successful, let's create a new account (opret ny bruger, skal flyttes)
+        /*Login was not successful, "let's create a new account" (opret ny bruger, skal flyttes)
         firebase.auth().createUserWithEmailAndPassword(username, password)
         .then(() => { 
           this.setState({ error: '', loading: false });
@@ -45,7 +45,7 @@ class Authentication extends Component {
             AsyncStorage.setItem('id_token', idToken);
             console.log(idToken);
             Alert.alert( 'Sign Up Successfully!', 'Click the button to go to Home Page!');
-            Actions.HomePage();
+            Actions.HomePage(); 
           })
           .catch(() => {
             this.setState({ error: 'Failed to obtain user ID token.', loading: false });
@@ -53,7 +53,7 @@ class Authentication extends Component {
         })
         .catch((err) => {
             this.setState({ error: 'Authentication failed. '+err, loading: false });
-        });
+        });*/    
     });
   }
   renderButtonOrSpinner() {
@@ -68,7 +68,7 @@ class Authentication extends Component {
         <Text style={styles.title}>Welcome</Text>
 
         <View style={styles.form}>
-          <TitledInput
+          <TitledInput //her skal evt. tilføjes tlf nummer
             label='Email Address'
             onChangeText={(username) => this.setState({username})}
             placeholder='Username'
