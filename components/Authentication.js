@@ -30,6 +30,7 @@ class Authentication extends Component {
         AsyncStorage.setItem('id_token', idToken);
         console.log(idToken);
         Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
+        //her sendes brugeren videre til searchPage
         Actions.SearchPage();
       })
       .catch((err) => {
@@ -37,15 +38,22 @@ class Authentication extends Component {
       });
     })
     .catch((err) => {
-        /*Login was not successful, "let's create a new account" (opret ny bruger, skal flyttes)
-        firebase.auth().createUserWithEmailAndPassword(username, password)
+      this.setState({ error: 'Authentication failed.'+err, loading: false }); 
+    });
+  }
+
+  createUser(){
+    //Login was not successful, "let's create a new account" (opret ny bruger, skal flyttes)
+    //her skal laves en knap der starter denne af en form....     
+    firebase.auth().createUserWithEmailAndPassword(username, password)
         .then(() => { 
           this.setState({ error: '', loading: false });
           firebase.auth().currentUser.getIdToken().then(function(idToken) {
             AsyncStorage.setItem('id_token', idToken);
             console.log(idToken);
             Alert.alert( 'Sign Up Successfully!', 'Click the button to go to Home Page!');
-            Actions.HomePage(); 
+            //her sendes brugeren videre til searchPage
+            Actions.SearchPage(); 
           })
           .catch(() => {
             this.setState({ error: 'Failed to obtain user ID token.', loading: false });
@@ -53,14 +61,15 @@ class Authentication extends Component {
         })
         .catch((err) => {
             this.setState({ error: 'Authentication failed. '+err, loading: false });
-        });*/    
-    });
+        });  
   }
+
   renderButtonOrSpinner() {
     if (this.state.loading) {
         return <ActivityIndicator size='small' />;    
     }
-    return <Button onPress={this.userAuth.bind(this)} title="Log in/Sign up" />;
+    return <Button onPress={this.userAuth.bind(this)} title="Log in" />;
+    return <Button onPress={this.createUser.bind(this)} title="Sign up" />;
   }
   render() {
     return (

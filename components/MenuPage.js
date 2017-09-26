@@ -10,7 +10,6 @@ const {
   AsyncStorage,
   ListView,
   StyleSheet,
-  TextInput,
   Text,
   View,
   KeyboardAvoidingView,
@@ -27,19 +26,15 @@ class MenuPage extends Component {
       })
     };
     this.itemsRef = this.getRef().child('items');
+    
   }
-  async userLogout() {
-    try {
-      await AsyncStorage.removeItem('id_token');
-      Alert.alert('Log Out Successfully!');
-      Actions.Authentication();
-    } catch (error) {
-      console.log('AsyncStorage error: ' + error.message);
-    }
-  }
+  
   getRef() {
+    //Her skal hentes items, dvs. varer.
+    //hvordan hentes en bestemt database?  
     return firebase.database().ref();
   }
+
   listenForItems(itemsRef) {
     itemsRef.on('value', (snap) => {
 
@@ -65,42 +60,46 @@ class MenuPage extends Component {
     return (
       //her skal der skabes forbindelse til databasen for hentning af listitems. 
       <KeyboardAvoidingView style={styles.listContainer} behavior="padding" >
-        <StatusBar onPress={this.userLogout.bind(this)} title="Grocery List" />
+        <StatusBar title="Menu" />
         <ListView
           dataSource={this.state.dataSource}
           renderRow={this._renderItem.bind(this)}
           enableEmptySections={true}
           style={styles.listview}/>
-        <TextInput
-          style={{height: 40}}
-          placeholder="Type here to add!"
-          onChangeText={(text) => this.setState({text})}
-        
-        // ActionBtn skal laves til en "til kassen Btn"
-        />
-        <ActionButton onPress={this._addItem.bind(this)} title="Add" />
+      
+        <ActionButton onPress={this._addGood.bind(this)} title="To CashRegistre" />
 
       </KeyboardAvoidingView>
     )
   }
+
+  
   //add item skal være tilegnet plus item til kassen - 
-  //der skal også laves en minus
-  _addItem() {
-    this.itemsRef.push({ title: this.state.text });
+  //der skal også laves en minus (array hvor goods gemmes)
+  _addGood() {
+    var goods = [];
+    snap.forEach((child) => {
+      goods.push({
+        title: child.val().title,
+        _key: child.key
+      });
+    });
+   // Actions.CashRegistrePage(); 
   }
 
-  //denne alert er til "orden er bestilt, din erdre er nummer 20". 
+  //denne alert er til "ordren er bestilt, din erdre er nummer 20". 
   _renderItem(item) {
     const onPress = () => {
       Alert.alert(
-        'Delete: '+item.title+'?',
+        'Lagt i kurv '+item.title,
         null,
         [
           //Se her for remove item i indkøbskurv
-          {text: 'Yes', onPress: (text) => this.itemsRef.child(item._key).remove()},
-         // {text: 'Cancel', onPress: (text) => console.log('Cancelled')}
+          //{text: 'Yes', onPress: (text) => this.itemsRef.child(item._key).remove()},
+          {text: 'OK', onPress: (text) => this.itemsRef.child(item._key)._addGood}
+          {text: 'Cancel', onPress: (text) => console.log('Cancelled')}
         ],
-        //{cancelable: false}
+        {cancelable: false}
       );
     };
 
