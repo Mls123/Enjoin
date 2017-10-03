@@ -1,12 +1,22 @@
-import React, {Component} from 'react';
-import { ActivityIndicator, AsyncStorage, StyleSheet, Text, View } from 'react-native';
-import {Router, Scene} from 'react-native-router-flux';
+
+
+import Exponent, {Components} from 'exponent';
+import React from 'react';
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity
+} from 'react-native';
+import {
+  NavigationProvider,
+  StackNavigation,
+  SharedElementOverlay
+} from '@exponent/ex-navigation'
+
 import * as firebase from 'firebase';
-import Authentication from './components/Authentication';
-import MenuPage from './components/MenuPage';
-import CashRegistrePage from './components/CashRegistrePage';
-import ProfilePage from './components/ProfilePage';
-import SearchPage from './components/SearchPage';
+import AppRouter from './AppRouter';
+import styles from './components/theme'
 
 const firebaseConfig = {
   apiKey: "AIzaSyAhMq5JhRJA8mOyKWoLi2qHrZ2RVj6OMo0",
@@ -38,8 +48,23 @@ export default class App extends Component {
       )
     } else {
       return (
-        //indsæt vores scener/ hvilke scener skal vi have? 
-        <Router>
+        <View style={[styles.container]}>
+        <NavigationProvider router={AppRouter}>
+          <SharedElementOverlay>
+            <StackNavigation
+              id="root"
+              initialRoute={AppRouter.getRoute('authentication')}
+              initial={!this.state.hasToken}
+            />
+          </SharedElementOverlay>
+        </NavigationProvider>
+      </View>
+      );
+    }
+  }
+}
+      
+      /*<Router>
           <Scene key='root'>
             <Scene
               component={Authentication}
@@ -48,37 +73,10 @@ export default class App extends Component {
               key='Authentication'
               title='Authentication'
             />
-            <Scene
-              component={SearchPage}
-              hideNavBar={true}
-              initial={this.state.hasToken}
-              key='SearchPage'
-              title='Search Page'
-            />
-            <Scene
-              component={MenuPage}
-              hideNavBar={true}
-              initial={this.state.hasToken}
-              key='MenuPage'
-              title='Menu Page'
-            />
-            <Scene
-              component={ProfilePage}
-              hideNavBar={true}
-              initial={this.state.hasToken}
-              key='ProfilePage'
-              title='Profile Page'
-            />
-            <Scene
-              component={CashRegistrePage}
-              hideNavBar={true}
-              initial={this.state.hasToken}
-              key='CashRegistrePage'
-              title='CashRegistre Page'
-            />
-          </Scene>
         </Router>
       );
     }
   }
-}
+}*/   
+
+Exponent.registerRootComponent(App);

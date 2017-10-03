@@ -3,6 +3,7 @@ import ReactNative from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import styles from '../styles';
+import AppRouter from './AppRouter';
 const {
   Alert,
   AsyncStorage,
@@ -30,8 +31,9 @@ class Authentication extends Component {
         AsyncStorage.setItem('id_token', idToken);
         console.log(idToken);
         Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
+        
         //her sendes brugeren videre til searchPage
-        Actions.SearchPage();
+        AppRouter.getRoute('productList')
       })
       .catch((err) => {
         this.setState({ error: 'Failed to obtain user ID token.'+err, loading: false });
