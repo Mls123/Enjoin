@@ -4,6 +4,16 @@ import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import styles from '../styles';
 import AppRouter from './AppRouter';
+import {
+  NavigationProvider,
+  StackNavigation,
+  SharedElementOverlay,
+  SharedElement,
+  SharedElementGroup,
+  withNavigation,
+  NavigationBar
+  } from '@exponent/ex-navigation';
+
 const {
   Alert,
   AsyncStorage,
@@ -33,7 +43,8 @@ class Authentication extends Component {
         Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
         
         //her sendes brugeren videre til searchPage
-        AppRouter.getRoute('productList')
+        AppRouter.getRouter('productList'); 
+    
       })
       .catch((err) => {
         this.setState({ error: 'Failed to obtain user ID token.'+err, loading: false });

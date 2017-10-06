@@ -19,12 +19,12 @@ import AppRouter from './AppRouter';
 import styles from './components/theme'
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAhMq5JhRJA8mOyKWoLi2qHrZ2RVj6OMo0",
-  authDomain: "enjoin-2017.firebaseapp.com",
-  databaseURL: "https://enjoin-2017.firebaseio.com",
-  projectId: "enjoin-2017",
-  storageBucket: "enjoin-2017.appspot.com",
-  messagingSenderId: "243125328635"
+  apiKey: "AIzaSyDiJkAGmoG-zplJQOf78HRfqajREF0bDqg",
+  authDomain: "enjoindb.firebaseapp.com",
+  databaseURL: "https://enjoindb.firebaseio.com",
+  projectId: "enjoindb",
+  storageBucket: "enjoindb.appspot.com",
+  messagingSenderId: "253129759594"
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 console.ignoredYellowBox = [
@@ -54,7 +54,7 @@ export default class App extends Component {
             <StackNavigation
               id="root"
               initialRoute={AppRouter.getRoute('authentication')}
-              initial={!this.state.hasToken}
+              //initial={!this.state.hasToken}
             />
           </SharedElementOverlay>
         </NavigationProvider>
