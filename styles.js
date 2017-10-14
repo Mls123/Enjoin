@@ -1,7 +1,7 @@
 const React = require('react-native')
 const {StyleSheet} = React
 const constants = {
-  actionColor: '#00ccff'
+  actionColor: '#24CE84'
 };
 
 var styles = StyleSheet.create({
@@ -28,7 +28,7 @@ var styles = StyleSheet.create({
     paddingBottom: 16,
   },
   liContainer: {
-    flex: 3,
+    flex: 2,
   },
   liText: {
     color: '#333',
@@ -36,7 +36,7 @@ var styles = StyleSheet.create({
   },
   navbar: {
     alignItems: 'center',
-    backgroundColor: '#00ccff',
+    backgroundColor: '#fff',
     borderBottomColor: '#eee',
     borderColor: 'transparent',
     borderWidth: 1,

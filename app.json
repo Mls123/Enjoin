@@ -1,6 +1,5 @@
 {
   "expo": {
-    "sdkVersion": "20.0.0",
-    //"image": "./billeder/Enjoin_logo.PNG"
+    "sdkVersion": "20.0.0"
   }
 }

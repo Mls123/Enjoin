@@ -1,22 +1,9 @@
-
-
-import Exponent, {Components} from 'exponent';
-import React from 'react';
-import {
-  StyleSheet,
-  Text,
-  View,
-  TouchableOpacity
-} from 'react-native';
-import {
-  NavigationProvider,
-  StackNavigation,
-  SharedElementOverlay
-} from '@exponent/ex-navigation'
-
+import React, {Component} from 'react';
+import { ActivityIndicator, AsyncStorage, StyleSheet, Text, View } from 'react-native';
+import {Router, Scene} from 'react-native-router-flux';
 import * as firebase from 'firebase';
-import AppRouter from './AppRouter';
-import styles from './components/theme'
+import Authentication from './components/Authentication';
+import HomePage from './components/HomePage';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDiJkAGmoG-zplJQOf78HRfqajREF0bDqg",
@@ -48,23 +35,7 @@ export default class App extends Component {
       )
     } else {
       return (
-        <View style={[styles.container]}>
-        <NavigationProvider router={AppRouter}>
-          <SharedElementOverlay>
-            <StackNavigation
-              id="root"
-              initialRoute={AppRouter.getRoute('authentication')}
-              //initial={!this.state.hasToken}
-            />
-          </SharedElementOverlay>
-        </NavigationProvider>
-      </View>
-      );
-    }
-  }
-}
-      
-      /*<Router>
+        <Router>
           <Scene key='root'>
             <Scene
               component={Authentication}
@@ -73,10 +44,16 @@ export default class App extends Component {
               key='Authentication'
               title='Authentication'
             />
+            <Scene
+              component={HomePage}
+              hideNavBar={true}
+              initial={this.state.hasToken}
+              key='HomePage'
+              title='Home Page'
+            />
+          </Scene>
         </Router>
       );
     }
   }
-}*/   
-
-Exponent.registerRootComponent(App);
+}

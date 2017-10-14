@@ -1,9 +1,0 @@
-Programmet burde være sat op til at starte app.js, herefter køres approuteren, som kører authentication. 
-Ved login køres productList. 
-
-Igår rettede jeg en masse errors, men det gad stadigvæk ikke køre. 
-Fejlen er error 500, clear watchman, osv. Jeg har clearet cache osv. 
-Så ved ikke lige hvorfor den 500 fejl kommer. Måske Albert kan gennemskue det. ? 
-
-AppRouter, Counter, Productlist, productdetails, theme og button klasserne er fra den hentede source kode: https://github.com/catalinmiron/mobile-shopping-react-native
-De brugte en font "SkyHookMono", som jeg har fjernet, da det koster penge at bruge. Måske er det skyld i nogle konfikter. 

@@ -3,17 +3,6 @@ import ReactNative from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import styles from '../styles';
-import AppRouter from './AppRouter';
-import {
-  NavigationProvider,
-  StackNavigation,
-  SharedElementOverlay,
-  SharedElement,
-  SharedElementGroup,
-  withNavigation,
-  NavigationBar
-  } from '@exponent/ex-navigation';
-
 const {
   Alert,
   AsyncStorage,
@@ -41,32 +30,22 @@ class Authentication extends Component {
         AsyncStorage.setItem('id_token', idToken);
         console.log(idToken);
         Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
-        
-        //her sendes brugeren videre til searchPage
-        AppRouter.getRouter('productList'); 
-    
+        Actions.HomePage();
       })
       .catch((err) => {
         this.setState({ error: 'Failed to obtain user ID token.'+err, loading: false });
       });
     })
     .catch((err) => {
-      this.setState({ error: 'Authentication failed.'+err, loading: false }); 
-    });
-  }
-
-  createUser(){
-    //Login was not successful, "let's create a new account" (opret ny bruger, skal flyttes)
-    //her skal laves en knap der starter denne af en form....     
-    firebase.auth().createUserWithEmailAndPassword(username, password)
+        //Login was not successful, let's create a new account
+        firebase.auth().createUserWithEmailAndPassword(username, password)
         .then(() => { 
           this.setState({ error: '', loading: false });
           firebase.auth().currentUser.getIdToken().then(function(idToken) {
             AsyncStorage.setItem('id_token', idToken);
             console.log(idToken);
             Alert.alert( 'Sign Up Successfully!', 'Click the button to go to Home Page!');
-            //her sendes brugeren videre til searchPage
-            Actions.SearchPage(); 
+            Actions.HomePage();
           })
           .catch(() => {
             this.setState({ error: 'Failed to obtain user ID token.', loading: false });
@@ -74,15 +53,14 @@ class Authentication extends Component {
         })
         .catch((err) => {
             this.setState({ error: 'Authentication failed. '+err, loading: false });
-        });  
+        });
+    });
   }
-
   renderButtonOrSpinner() {
     if (this.state.loading) {
         return <ActivityIndicator size='small' />;    
     }
-    return <Button onPress={this.userAuth.bind(this)} title="Log in" />;
-    return <Button onPress={this.createUser.bind(this)} title="Sign up" />;
+    return <Button onPress={this.userAuth.bind(this)} title="Log in/Sign up" />;
   }
   render() {
     return (
@@ -90,7 +68,7 @@ class Authentication extends Component {
         <Text style={styles.title}>Welcome</Text>
 
         <View style={styles.form}>
-          <TitledInput //her skal evt. tilføjes tlf nummer
+          <TitledInput
             label='Email Address'
             onChangeText={(username) => this.setState({username})}
             placeholder='Username'
