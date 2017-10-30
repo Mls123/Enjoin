@@ -1,17 +1,18 @@
+
+import Authentication from './components/Authentication';
 import React, {Component} from 'react';
 import { ActivityIndicator, AsyncStorage, StyleSheet, Text, View } from 'react-native';
 import {Router, Scene} from 'react-native-router-flux';
 import * as firebase from 'firebase';
-import Authentication from './components/Authentication';
-import HomePage from './components/HomePage';
+import searchPage from './components/searchPage';
 
 const firebaseConfig = {
-  apiKey: "AIzaSyDiJkAGmoG-zplJQOf78HRfqajREF0bDqg",
-  authDomain: "enjoindb.firebaseapp.com",
-  databaseURL: "https://enjoindb.firebaseio.com",
-  projectId: "enjoindb",
-  storageBucket: "enjoindb.appspot.com",
-  messagingSenderId: "253129759594"
+  apiKey: "AIzaSyAhMq5JhRJA8mOyKWoLi2qHrZ2RVj6OMo0",
+  authDomain: "enjoin-2017.firebaseapp.com",
+  databaseURL: "https://enjoin-2017.firebaseio.com",
+  projectId: "enjoin-2017",
+  storageBucket: "enjoin-2017.appspot.com",
+  messagingSenderId: "243125328635"
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
 console.ignoredYellowBox = [
@@ -24,8 +25,8 @@ export default class App extends Component {
     this.state = { hasToken: false, isLoaded: false };
   }
   componentWillMount() {
-    AsyncStorage.getItem('id_token').then((token) => {
-      this.setState({ hasToken: token !== null, isLoaded: true });
+    AsyncStorage.getItem('user').then((user) => {
+      this.setState({ hasToken: user !== null, isLoaded: true });
     });
   }
   render() {
@@ -39,20 +40,21 @@ export default class App extends Component {
           <Scene key='root'>
             <Scene
               component={Authentication}
-              hideNavBar={true}
               initial={!this.state.hasToken}
+              hideNavBar={true}
               key='Authentication'
               title='Authentication'
             />
             <Scene
-              component={HomePage}
-              hideNavBar={true}
+              component={searchPage}
               initial={this.state.hasToken}
-              key='HomePage'
-              title='Home Page'
+              hideNavBar={true}
+              key='searchPage'
+              title='searchPage'
             />
-          </Scene>
-        </Router>
+            </Scene>
+           
+          </Router>
       );
     }
   }

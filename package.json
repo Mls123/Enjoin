@@ -1,10 +1,10 @@
 {
-  "name": "RouterApp",
+  "name": "Enjoin",
   "version": "0.1.0",
   "private": true,
   "devDependencies": {
-    "react-native-scripts": "1.3.1",
-    "jest-expo": "~20.0.0",
+    "react-native-scripts": "1.5.0",
+    "jest-expo": "^21.0.2",
     "react-test-renderer": "16.0.0-alpha.12"
   },
   "main": "./node_modules/react-native-scripts/build/bin/crna-entry.js",
@@ -19,10 +19,17 @@
     "preset": "jest-expo"
   },
   "dependencies": {
-    "expo": "^20.0.0",
-    "firebase": "^4.3.1",
+    "expo": "^21.0.0",
+    "firebase": "^4.6.0",
+    "native-base": "^2.3.3",
     "react": "16.0.0-alpha.12",
-    "react-native": "^0.47.0",
-    "react-native-router-flux": "^4.0.0-beta.21"
+    "react-native": "^0.48.4",
+    "react-native-facebook-login": "^1.6.0",
+    "react-native-firebase": "^3.0.5",
+    "react-native-firebase-auth": "^1.0.1",
+    "react-native-google-sign-in": "0.0.16",
+    "react-native-redux-router": "^1.0.7",
+    "react-native-router-flux": "^4.0.0-beta.22",
+    "react-native-searchbar": "^1.13.0"
   }
 }

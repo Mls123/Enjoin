@@ -3,6 +3,8 @@ import ReactNative from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import styles from '../styles';
+import searchPage from './searchPage';
+
 const {
   Alert,
   AsyncStorage,
@@ -18,19 +20,25 @@ const {
 class Authentication extends Component {
   constructor() {
     super();
-    this.state = { username: '', password: '', loading: false, error: '' };
+    this.state = { 
+      loading: false,
+      email: '',
+      password: '',
+      error: '',
+    };
   }
+
   userAuth() {
     this.setState({ error: '', loading: true });
-    const { username, password } = this.state;
-    firebase.auth().signInWithEmailAndPassword(username, password)
+    const { email, password } = this.state;
+    firebase.auth().signInWithEmailAndPassword(email, password)
     .then(() => {
       this.setState({ error: '', loading: false });
       firebase.auth().currentUser.getIdToken().then(function(idToken) {
         AsyncStorage.setItem('id_token', idToken);
         console.log(idToken);
         Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
-        Actions.HomePage();
+        Actions.searchPage();
       })
       .catch((err) => {
         this.setState({ error: 'Failed to obtain user ID token.'+err, loading: false });
@@ -38,14 +46,14 @@ class Authentication extends Component {
     })
     .catch((err) => {
         //Login was not successful, let's create a new account
-        firebase.auth().createUserWithEmailAndPassword(username, password)
+        firebase.auth().createUserWithEmailAndPassword(email, password)
         .then(() => { 
           this.setState({ error: '', loading: false });
           firebase.auth().currentUser.getIdToken().then(function(idToken) {
             AsyncStorage.setItem('id_token', idToken);
             console.log(idToken);
             Alert.alert( 'Sign Up Successfully!', 'Click the button to go to Home Page!');
-            Actions.HomePage();
+            Actions.searchPage();
           })
           .catch(() => {
             this.setState({ error: 'Failed to obtain user ID token.', loading: false });
@@ -56,12 +64,14 @@ class Authentication extends Component {
         });
     });
   }
+  
   renderButtonOrSpinner() {
     if (this.state.loading) {
         return <ActivityIndicator size='small' />;    
     }
-    return <Button onPress={this.userAuth.bind(this)} title="Log in/Sign up" />;
+    return <Button onPress={this.userAuth.bind(this)} title="Log in" />;
   }
+
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior='padding'>
@@ -70,9 +80,9 @@ class Authentication extends Component {
         <View style={styles.form}>
           <TitledInput
             label='Email Address'
-            onChangeText={(username) => this.setState({username})}
+            onChangeText={(email) => this.setState({email})}
             placeholder='Username'
-            value={this.state.username}
+            value={this.state.email}
           />
 
           <TitledInput
