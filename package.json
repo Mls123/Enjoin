@@ -24,12 +24,17 @@
     "native-base": "^2.3.3",
     "react": "16.0.0-alpha.12",
     "react-native": "^0.48.4",
+    "react-native-checkbox": "^1.2.0",
+    "react-native-checkbox-group": "^1.0.3",
+    "react-native-dropdown": "0.0.6",
     "react-native-facebook-login": "^1.6.0",
     "react-native-firebase": "^3.0.5",
     "react-native-firebase-auth": "^1.0.1",
     "react-native-google-sign-in": "0.0.16",
+    "react-native-modal-dropdown": "^0.5.0",
     "react-native-redux-router": "^1.0.7",
     "react-native-router-flux": "^4.0.0-beta.22",
-    "react-native-searchbar": "^1.13.0"
+    "react-native-searchbar": "^1.13.0",
+    "react-native-spring-dropdown": "^1.0.6"
   }
 }

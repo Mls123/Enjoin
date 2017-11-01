@@ -37,7 +37,7 @@ class Authentication extends Component {
       firebase.auth().currentUser.getIdToken().then(function(idToken) {
         AsyncStorage.setItem('id_token', idToken);
         console.log(idToken);
-        Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
+        //Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
         Actions.searchPage();
       })
       .catch((err) => {
@@ -52,7 +52,7 @@ class Authentication extends Component {
           firebase.auth().currentUser.getIdToken().then(function(idToken) {
             AsyncStorage.setItem('id_token', idToken);
             console.log(idToken);
-            Alert.alert( 'Sign Up Successfully!', 'Click the button to go to Home Page!');
+            //Alert.alert( 'Sign Up Successfully!', 'Click the button to go to Home Page!');
             Actions.searchPage();
           })
           .catch(() => {

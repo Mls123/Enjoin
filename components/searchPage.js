@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { AppRegistry, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
+import { AppRegistry, Picker, Text, View, TouchableOpacity, TouchableHighlight } from 'react-native';
 import SearchBar from 'react-native-searchbar';
 import {Actions} from 'react-native-router-flux';
 import Authentication from './Authentication';
@@ -22,22 +22,19 @@ class searchPage extends Component {
     this.state = {
       items,
       results: [],
-
+      hideBack: true,
     };
     this._handleResults = this._handleResults.bind(this);
   }
 
   _handleResults(results) {
-    this.setState({ results });
-  }
+    this.setState({ results });   
 
-  backButton(){
-    Actions.Authentication();
   }
 
   onPress(){
-    console.log('hh')
-    //Actions.MenuPage();
+    console.log('junine likes coffe')
+    Actions.MenuPage(); 
   }
 
   render() {
@@ -45,21 +42,29 @@ class searchPage extends Component {
                    
          <View style={{ marginTop: 50 }}>
 
+          
           <View style={{ marginTop: 75, marginLeft: 10 }}>
             {
               this.state.results.map((result, i) => { 
-                return (
-                  <TouchableHighlight key={i} onPress={this.onPress}>
+                 
+                return ( 
+                  
+                  <TouchableHighlight key={i} onPress={() => this.onPress()} >
+                    
                     <Text>
                       {typeof result === 'object' && !(result instanceof Array) ? 'object' : result.toString()}
                       
                     </Text>
+                    
                   </TouchableHighlight>
+                 
                 );
                  
-              })
-            }
+              })    
+        }
+            
             </View>
+           
            
 
           <SearchBar 
@@ -67,7 +72,8 @@ class searchPage extends Component {
             data={items}
             handleResults={this._handleResults}
             showOnLoad
-            //onBackPress ={this.backButton}
+            hideBack= {this.state.hideBack}
+            
           />
           
         </View>
