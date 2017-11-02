@@ -19,6 +19,7 @@
     "preset": "jest-expo"
   },
   "dependencies": {
+    "apsl-react-native-button": "^3.1.0",
     "expo": "^21.0.0",
     "firebase": "^4.6.0",
     "native-base": "^2.3.3",

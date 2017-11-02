@@ -32,9 +32,9 @@ class searchPage extends Component {
 
   }
 
-  onPress(){
-    console.log('junine likes coffe')
-    Actions.MenuPage(); 
+  onPress(result){
+    console.log('Result: '+result)
+    Actions.MenuPage({title: result}); 
   }
 
   render() {
@@ -49,7 +49,7 @@ class searchPage extends Component {
                  
                 return ( 
                   
-                  <TouchableHighlight key={i} onPress={() => this.onPress()} >
+                  <TouchableHighlight key={i} onPress={() => this.onPress(result)} >
                     
                     <Text>
                       {typeof result === 'object' && !(result instanceof Array) ? 'object' : result.toString()}
