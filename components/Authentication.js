@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactNative from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
+
 import styles from '../styles';
 import searchPage from './searchPage';
 
@@ -67,7 +68,7 @@ class Authentication extends Component {
   
   renderButtonOrSpinner() {
     if (this.state.loading) {
-        return <ActivityIndicator size='small' />;    
+        return <ActivityIndicator size='medium' />;    
     }
     return <Button onPress={this.userAuth.bind(this)} title="Log in" />;
   }
@@ -99,24 +100,29 @@ class Authentication extends Component {
     );
   }
 }
+
 const TitledInput = ({ label, value, onChangeText, placeholder, secureTextEntry }) => {
     
-    const { inputStyle, labelStyle, containerStyle } = styles;
+const { inputStyle, labelStyle, containerStyle } = styles;
 
     return (
         <View style={containerStyle}>
+            
             <Text style={labelStyle}>{label.toUpperCase()}</Text>
-            <TextInput
+          
+          <TextInput
             autoCorrect={false}
             placeholder={placeholder}
             secureTextEntry={secureTextEntry}
             value={value}
             onChangeText={onChangeText}
-            style={inputStyle}
+            //style={inputStyle}
             editable={true}
             returnKeyType='next'
           />
+
         </View>
     );
 };
+
 module.exports = Authentication;

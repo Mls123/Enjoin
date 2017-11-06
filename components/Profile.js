@@ -15,16 +15,12 @@ import {
 import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 
-class CartView extends Component {
+class Profile extends Component {
     
         constructor(props) {
             super(props);
             };
-        
-        
-        
             
 }
 
-module.exports = CartView;
-
+module.exports = Profile;

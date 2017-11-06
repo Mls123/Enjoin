@@ -13,11 +13,12 @@ import {
 } from 'react-native';
 
 import {Actions} from 'react-native-router-flux';
-import Authentication from './Authentication';
 import * as firebase from 'firebase';
 import ModalDropdown from 'react-native-modal-dropdown';
-import CheckBox from 'react-native-checkbox';
 import CheckboxGroup from 'react-native-checkbox-group';
+
+import Authentication from './Authentication';
+import cartView from './CartView';
 
 const DEMO_OPTIONS_1 = ['option 1', 'option 2', 'option 3', 'option 4', 'option 5', 'option 6', 'option 7', 'option 8', 'option 9'];
 
@@ -25,8 +26,18 @@ class MenuPage extends Component {
 
     constructor(props) {
         super(props);
-        
+        this.state = {
+            items,
+        }
         };
+        
+  _dropdown_3_adjustFrame(style) {
+    style.top -= 15;
+    return style;
+  }
+  onPress(){
+    Actions.cartView(title);
+  }
 
   render() {
     return (
@@ -37,9 +48,11 @@ class MenuPage extends Component {
                       contentContainerStyle={styles.contentContainer}
                       showsVerticalScrollIndicator={true}
                       scrollEventThrottle={1}>
-            <Text style={{fontWeight: 'bold', textAlign: 'center', paddingBottom: 30, paddingTop: 30}}>
-              {this.props.title}
-            </Text>
+                
+                <Text style={{fontWeight: 'bold', textAlign: 'center', paddingBottom: 30, paddingTop: 30}}>
+                {this.props.title}
+                </Text>
+            
             <ModalDropdown ref={el => this._dropdown_3 = el}
                            style={styles.dropdown_3}
                            defaultValue = {'Vælg kategori'}
@@ -48,98 +61,93 @@ class MenuPage extends Component {
                            dropdownTextStyle={styles.dropdown_3_dropdownTextStyle}
                            dropdownTextHighlightStyle={styles.dropdown_3_dropdownTextHighlightStyle}
             />
-        <View style={{height: 200, width: 200, alignItems: 'center', justifyContent: 'center'}}>
-            <Image
-                source={{uri: 'https://bt.bmcdn.dk/media/cache/resolve/image_1240/image/91/918179/14617331-cup-coffee-beans-wooden.jpg'}}
-                //source={require('./Img/logo.png')} kræver ejecting 
-                style={{height: 100, width: 200}}
-            />
-        </View>
+                
+                <View style={{height: 200, width: 200, alignItems: 'center', justifyContent: 'center'}}>
+                    <Image
+                        source={{uri: 'https://bt.bmcdn.dk/media/cache/resolve/image_1240/image/91/918179/14617331-cup-coffee-beans-wooden.jpg'}}
+                        //source={require('./Img/logo.png')} kræver ejecting 
+                        style={{height: 100, width: 200}}
+                    />
+                </View>
 
-        <Text style={{textAlign: 'center', paddingTop:100}}>
-          
-            {'information omkring kaff '}  
-        </Text>
+                <Text style={{textAlign: 'center', paddingTop:100}}>
+                    {'information omkring kaff '}  
+                </Text>
 
-        <Text style={{fontWeight: 'bold',textAlign: 'center', paddingTop:20, paddingBottom: 10}}>
-          
-            {'Tilføj tilbehør!:'}  
-        </Text>
-          
-            <CheckboxGroup
-            callback={(selected) => { console.log(selected) }}
-            iconColor={"#00a2dd"}
-            iconSize={50}
-            checkedIcon="ios-checkbox-outline"
-            uncheckedIcon="ios-square-outline"
-            checkboxes={[
-                {
-                label: "Bajer", // label for checkbox item 
-                value: 1, // selected value for item, if selected, what value should be sent? 
-                },
-                {
-                label: "Ad",
-                value: 2
-                },
-            ]}
-            labelStyle={{
-                color: '#333',
-                padding:20,
-            }}
-            rowStyle={{
-                flexDirection: 'row'
-            }}
-            rowDirection={"row"}
-            />
+                <Text style={{fontWeight: 'bold',textAlign: 'center', paddingTop:20, paddingBottom: 10}}>
+                    {'Tilføj tilbehør!:'}  
+                </Text>
           
             <CheckboxGroup
-            callback={(selected) => { console.log(selected) }}
-            iconColor={"#00a2dd"}
-            iconSize={50}
-            checkedIcon="ios-checkbox-outline"
-            uncheckedIcon="ios-square-outline"
-            checkboxes={[
-                {
-                label: "Tofu", // label for checkbox item 
-                value: 1, // selected value for item, if selected, what value should be sent? 
-                },
-                {
-                label: "Soya",
-                value: 2
-                },
-            ]}
-            labelStyle={{
-                color: '#333',
-                padding:20,
-            }}
-            rowStyle={{
-                flexDirection: 'row'
-            }}
-            rowDirection={"row"}
+                style={styles.doubleContainer}
+                callback={(selected) => { console.log(selected) }}
+                iconColor={"#00a2dd"}
+                iconSize={50}
+                checkedIcon="ios-checkbox-outline"
+                uncheckedIcon="ios-square-outline"
+                checkboxes={[
+                    {
+                    label: "Bajer", // label for checkbox item 
+                    value: 1, // selected value for item, if selected, what value should be sent? 
+                    },
+                    {
+                    label: "Ad",
+                    value: 2
+                    },
+                ]}
+                labelStyle={{
+                    color: '#333',
+                    padding:20,
+                }}
+                rowStyle={{
+                    flexDirection: 'row'
+                }}
+                rowDirection={"row"}
+            />
+          
+            <CheckboxGroup
+                style={styles.doubleContainer}
+                callback={(selected) => { console.log(selected) }}
+                iconColor={"#00a2dd"}
+                iconSize={50}
+                checkedIcon="ios-checkbox-outline"
+                uncheckedIcon="ios-square-outline"
+                checkboxes={[
+                    {
+                    label: "Tofu", // label for checkbox item 
+                    value: 1, // selected value for item, if selected, what value should be sent? 
+                    },
+                    {
+                    label: "Soya",
+                    value: 2
+                    },
+                ]}
+                labelStyle={{
+                    color: '#333',
+                    padding:20,
+                }}
+                rowStyle={{
+                    flexDirection: 'row'
+                }}
+                rowDirection={"row"}
             />
 
-       <View style={styles.doubleContainer}>
-            <Button
-                //onPress={Actions.cartView}
-                title="Læg i kurven"
-                color="#841584"
-            />
+            <View style={styles.doubleContainer}>
+                <Button
+                    onPress={this.onPress()}
+                    title="Læg i kurven"
+                    color="#841584"
+                />
 
-            <Button
-                title="Gå til kurven!!"
-                color="#841584"
-            />
-        </View>
-    </ScrollView>
+                <Button
+                    title="Gå til kurven!!"
+                    color="#841584"
+                />
+            </View>
+        </ScrollView>
     </View>
 </View>
     );
-  }
-
-
-  _dropdown_3_adjustFrame(style) {
-    style.top -= 15;
-    return style;
   }
 }
 
@@ -185,7 +193,6 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    borderColor:'black',
   }
  
 });

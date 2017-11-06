@@ -6,6 +6,9 @@ import {Router, Scene} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import searchPage from './components/searchPage';
 import MenuPage from './components/MenuPage';
+import CartView from './components/CartView';
+import Profile from './components/Profile';
+import OrderVIew from './componentsShop/OrderView';
 
 const firebaseConfig = {
   apiKey: "AIzaSyAhMq5JhRJA8mOyKWoLi2qHrZ2RVj6OMo0",
@@ -57,6 +60,27 @@ export default class App extends Component {
               hideNavBar={true}
               key='MenuPage'
               title='MenuPage'
+            />
+            <Scene
+              component={CartView}
+              initial={this.state.hasToken}
+              hideNavBar={true}
+              key='CartView'
+              title='CartView'
+            />
+            <Scene
+              component={Profile}
+              initial={this.state.hasToken}
+              hideNavBar={true}
+              key='Profile'
+              title='Profile'
+            />
+            <Scene
+              component={OrderVIew}
+              initial={this.state.hasToken}
+              hideNavBar={true}
+              key='OrderView'
+              title='OrderView'
             />
             </Scene>
           </Router>
