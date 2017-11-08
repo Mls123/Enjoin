@@ -7,7 +7,7 @@ import * as firebase from 'firebase';
 const DEMO_PRODUCT_1 = ['2*Coffee \n', '1*Cacao '];
 const DEMO_PRODUCT_2 = ['1*Ice Blend\n', '1*Cake '];
 
-export default class OrderView extends Component {
+class OrderView extends Component {
    data=[{to: 'STAY', title: 'Order 1: ', body: DEMO_PRODUCT_1}, {to:'TO-GO', title: 'Order 2: ', body: DEMO_PRODUCT_2 }];
   
   render(){
@@ -15,7 +15,7 @@ export default class OrderView extends Component {
       <View> 
     <ScrollView>
         
-        <Text style={{fontWeight: 'bold', textAlign: 'center', paddingBottom: 30, paddingTop: 30, fontSize: 20}}>
+        <Text style={{fontWeight: 'bold', textAlign: 'center', paddingBottom: 30, paddingTop: 30, fontSize: 20, /*position: 'absolute'*/}}>
         {'Orders'} 
         </Text>
         

@@ -1,9 +1,9 @@
+
 import Authentication from './components/Authentication';
 import React, {Component} from 'react';
-import {AppRegistry, ActivityIndicator, AsyncStorage, StyleSheet, Text, View } from 'react-native';
+import { ActivityIndicator, AsyncStorage, StyleSheet, Text, View } from 'react-native';
 import {Router, Scene} from 'react-native-router-flux';
 import * as firebase from 'firebase';
-
 import SearchPage from './components/SearchPage';
 import MenuPage from './components/MenuPage';
 import CartView from './components/CartView';

@@ -4,7 +4,7 @@ import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 
 import styles from '../styles';
-import searchPage from './searchPage';
+import SearchPage from './SearchPage';
 
 const {
   Alert,
@@ -15,7 +15,9 @@ const {
   TextInput,
   Text,
   View,
-  KeyboardAvoidingView
+  KeyboardAvoidingView,
+  Image,
+  AppRegistry,
 } = ReactNative;
 
 class Authentication extends Component {
@@ -39,7 +41,7 @@ class Authentication extends Component {
         AsyncStorage.setItem('id_token', idToken);
         console.log(idToken);
         //Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
-        Actions.searchPage();
+        Actions.SearchPage();
       })
       .catch((err) => {
         this.setState({ error: 'Failed to obtain user ID token.'+err, loading: false });
@@ -68,7 +70,7 @@ class Authentication extends Component {
   
   renderButtonOrSpinner() {
     if (this.state.loading) {
-        return <ActivityIndicator size='medium' />;    
+        return <ActivityIndicator size='small' />;    
     }
     return <Button onPress={this.userAuth.bind(this)} title="Log in" />;
   }
@@ -76,13 +78,16 @@ class Authentication extends Component {
   render() {
     return (
       <KeyboardAvoidingView style={styles.container} behavior='padding'>
-        <Text style={styles.title}>Welcome</Text>
+        <Image
+          source={{uri: 'https://bt.bmcdn.dk/media/cache/resolve/image_1240/image/91/918179/14617331-cup-coffee-beans-wooden.jpg'}}
+          style={{height: 90, alignItems: 'center', justifyContent: 'center', borderRadius: 10}}
+        />
 
         <View style={styles.form}>
           <TitledInput
             label='Email Address'
             onChangeText={(email) => this.setState({email})}
-            placeholder='Username'
+            placeholder='Email'
             value={this.state.email}
           />
 
@@ -116,7 +121,7 @@ const { inputStyle, labelStyle, containerStyle } = styles;
             secureTextEntry={secureTextEntry}
             value={value}
             onChangeText={onChangeText}
-            //style={inputStyle}
+            style={inputStyle}
             editable={true}
             returnKeyType='next'
           />

@@ -11,57 +11,12 @@ var styles = StyleSheet.create({
     height: '100%',
     padding: 50
   },
-  listContainer: {
-    backgroundColor: '#f2f2f2',
-    flex: 1
-  },
-  listview: {
-    flex: 1,
-  },
-  li: {
-    backgroundColor: '#fff',
-    borderBottomColor: '#eee',
-    borderColor: 'transparent',
-    borderWidth: 1,
-    paddingLeft: 16,
-    paddingTop: 14,
-    paddingBottom: 16,
-  },
-  liContainer: {
-    flex: 2,
-  },
-  liText: {
-    color: '#333',
-    fontSize: 16,
-  },
-  navbar: {
-    alignItems: 'center',
-    backgroundColor: '#fff',
-    borderBottomColor: '#eee',
-    borderColor: 'transparent',
-    borderWidth: 1,
-    justifyContent: 'center',
-    height: 44,
-    flexDirection: 'row',
-    width: '100%'
-  },
-  navbarTitle: {
-    flex: 2,
-    color: '#444',
-    fontSize: 16,
-    fontWeight: '500',
-    textAlign: 'center'
-  },
-  statusbar: {
-    backgroundColor: '#fff',
-    height: 22,
-  },
   center: {
     textAlign: 'center',
   },
   actionText: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 18,
     textAlign: 'center',
   },
   action: {
@@ -73,7 +28,9 @@ var styles = StyleSheet.create({
     paddingBottom: 16,
   },
   form: {
-    backgroundColor: '#f2f2f2'
+    backgroundColor: '#f2f2f2',
+    paddingTop: 15,
+    paddingBottom: -20,
   },
   title: {
     color: '#444',
@@ -88,11 +45,10 @@ var styles = StyleSheet.create({
     paddingRight: 5,
     paddingLeft: 5,
     paddingBottom: 2,
-    color: '#262626',
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '200',
     flex: 1,
-    height: 40
+    height: 35
   },
   containerStyle: {
     height: 60,
