@@ -6,8 +6,8 @@ import * as firebase from 'firebase';
 
 import SearchPage from './components/SearchPage';
 import MenuPage from './components/MenuPage';
-import CartView from './components/CartView';
-import Profile from './components/Profile';
+import CartPage from './components/CartPage';
+import ProfilePage from './components/ProfilePage';
 import OrderVIew from './componentsShop/OrderView';
 
 const firebaseConfig = {
@@ -65,18 +65,18 @@ export default class App extends Component {
               title='MenuPage'
             />
             <Scene
-              component={CartView}
+              component={CartPage}
               initial={this.state.hasToken}
               hideNavBar={true}
-              key='CartView'
-              title='CartView'
+              key='CartPage'
+              title='CartPage'
             />
             <Scene
-              component={Profile}
+              component={ProfilePage}
               initial={this.state.hasToken}
               hideNavBar={true}
-              key='Profile'
-              title='Profile'
+              key='ProfilePage'
+              title='ProfilePage'
             />
             <Scene
               component={OrderVIew}

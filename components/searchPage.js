@@ -7,6 +7,7 @@ import {
   TouchableHighlight,
   Keyboard,
   ScrollView,
+  Button,
 } from 'react-native';
 
 import SearchBar from 'react-native-searchbar';
@@ -40,7 +41,6 @@ class searchPage extends Component {
 
   _handleResults(results) {
     this.setState({ results });   
-
   }
 
   onPress(result){
@@ -53,7 +53,7 @@ class searchPage extends Component {
   }
 
   render() {
-    Keyboard.dismiss(); 
+    
         return (
                
          <View style={{ marginTop: 50 }}>
@@ -80,12 +80,6 @@ class searchPage extends Component {
                 );
               })    
             }
-            
-            <Button
-                onPress={() => this._profileBtnPressed()}
-                title="   See your profile   "
-                color="#4dd2ff"
-            />
 
             </View>
         
@@ -95,7 +89,19 @@ class searchPage extends Component {
             handleResults={this._handleResults}
             showOnLoad
             hideBack= {this.state.hideBack}
+            focusOnLayout = {false}
         />  
+
+        <View
+        style={{marginTop: 400, padding: 20}}>
+
+            <Button 
+                onPress={() => this._profileBtnPressed()}
+                title="   See your profile   "
+                color="#4dd2ff"
+            />
+        </View>
+
     </View>
         );
       }

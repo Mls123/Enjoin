@@ -18,6 +18,7 @@ const {
   KeyboardAvoidingView,
   Image,
   AppRegistry,
+  Keyboard,
 } = ReactNative;
 
 class Authentication extends Component {
@@ -42,30 +43,12 @@ class Authentication extends Component {
         console.log(idToken);
         //Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
         Actions.SearchPage();
+        Keyboard.dismiss();
       })
       .catch((err) => {
         this.setState({ error: 'Failed to obtain user ID token.'+err, loading: false });
       });
     })
-    .catch((err) => {
-        //Login was not successful, let's create a new account
-        firebase.auth().createUserWithEmailAndPassword(email, password)
-        .then(() => { 
-          this.setState({ error: '', loading: false });
-          firebase.auth().currentUser.getIdToken().then(function(idToken) {
-            AsyncStorage.setItem('id_token', idToken);
-            console.log(idToken);
-            //Alert.alert( 'Sign Up Successfully!', 'Click the button to go to Home Page!');
-            Actions.searchPage();
-          })
-          .catch(() => {
-            this.setState({ error: 'Failed to obtain user ID token.', loading: false });
-          });
-        })
-        .catch((err) => {
-            this.setState({ error: 'Authentication failed. '+err, loading: false });
-        });
-    });
   }
   
   renderButtonOrSpinner() {

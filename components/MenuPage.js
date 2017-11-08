@@ -16,7 +16,6 @@ import * as firebase from 'firebase';
 import ModalDropdown from 'react-native-modal-dropdown';
 import CheckboxGroup from 'react-native-checkbox-group';
 import ImageSlider from 'react-native-elastic-image-slider';
-import ViewMoreText from 'react-native-view-more-text';
 
 import Authentication from './Authentication';
 import CartPage from './CartPage';
@@ -71,16 +70,6 @@ class MenuPage extends Component {
   onPress(){
     Actions.CartPage();
   }
-  renderViewMore(onPress){
-    return(
-      <Text onPress={onPress}>View more</Text>
-    )
-  }
-  renderViewLess(onPress){
-    return(
-      <Text onPress={onPress}>View less</Text>
-    )
-  }
 
   render() {
     return (
@@ -118,25 +107,7 @@ class MenuPage extends Component {
                             {'Dobbelt espresso toppet med vand \n'}  
                         </Text>
                         
-                        <ViewMoreText
-                                numberOfLines={2}
-                                renderViewMore={this.renderViewMore}
-                                renderViewLess={this.renderViewLess}>
-                            <Text>
-                                Vægt: 270 gram 
-                                ingredienser: espresso
-
-                                Næringsværdi pr. kop:
-                                Energi kj/Kcal: 0/0 
-                                Kulhydrater: 0g 
-                                Hvoraf sukkerarter: 0g 
-                                Protein: 0g
-                                Fedt: 0g
-                                Hvoraf mættet fedt: 0g 
-                                Salt: 0g
-                            </Text>
-                        </ViewMoreText>
-
+                       
                     <Text style={{fontWeight: 'bold', paddingTop:20, paddingBottom: 10, textAlign: 'left', width: 315}}>
                         {'Choose extras:'}  
                     </Text>
