@@ -18,29 +18,26 @@ import MenuPage from './MenuPage';
 import Authentication from './Authentication';
 import ProfilePage from './ProfilePage';
 
-const items = [
-  'Espresso House Frederiksberg',
-  'Baresso Frederiksberg',
-  'Starbucks Frederiksberg',
-  'Espresso House Hundige',
-  'Espresso House Bornholm',
-  'Karens super kaffe',
-];
+var items = [
+ //'Espresso House Bla'
+]; 
 
 class searchPage extends Component {
       
   constructor(props) {
     super(props);
     this.state = {
-      items,
+      shops,
       results: [],
       hideBack: true,
     };
     this._handleResults = this._handleResults.bind(this);
+    this.shopRef = firebase.database().ref().child('Shops');
   }
 
   _handleResults(results) {
     this.setState({ results });   
+    
   }
 
   onPress(result){
@@ -52,13 +49,34 @@ class searchPage extends Component {
     Actions.ProfilePage();
   }
 
+  componentDidMount() {
+    this.listenForItems(this.shopRef);
+    
+  }
+
+  listenForItems(shopRef) {
+    shopRef.on('value', (snap) => {
+
+      // get children as an array
+      var item = [];
+      snap.forEach((child) => {
+        item.push({
+          title: snap.val().title,
+          _key: child.key
+        });
+      });
+      this.setState({ items: item });
+
+    });
+  }
+
   render() {
     
         return (
                
          <View style={{ marginTop: 50 }}>
          
-          <View style={{ marginTop: 55, marginLeft: 20, marginRight: 20, borderRadius: 10, backgroundColor: '#e0e9fc', borderColor:'grey', borderWidth:0.5 }}>
+          <View style={{ marginTop: 55, marginLeft: 20, marginRight: 20, borderRadius: 10, backgroundColor: '#e6ffff', borderColor:'#000000', borderWidth:0.5 }}>
             
             {
               this.state.results.map((result, i) => { 
@@ -67,7 +85,7 @@ class searchPage extends Component {
     
                   <TouchableHighlight 
                       key={i} 
-                      underlayColor='#d7dce8'
+                      underlayColor='#99ffff'
                       style={{borderRadius: 10}} 
                       onPress={() => this.onPress(result)} >
                     

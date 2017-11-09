@@ -52,6 +52,7 @@ class MenuPage extends Component {
         this.state = {
             position: 0,
             showMore: false,
+            scrollToEnd: false,
         };
         this._handlePosition = this._handlePosition.bind(this);
     };
@@ -81,9 +82,9 @@ class MenuPage extends Component {
                       showsVerticalScrollIndicator={true}
                       scrollEventThrottle={1}>
                 
-                <Text style={{fontWeight: 'bold', textAlign: 'center', paddingBottom: 20, paddingTop: 50}}>
-                {this.props.title}
-                </Text>
+                  <Text style={{fontWeight: 'bold', textAlign: 'center', paddingBottom: 20, paddingTop: 50}}>
+                        {this.props.title}
+                    </Text>
             
             <ModalDropdown ref={el => this._dropdown_3 = el}
                            style={styles.dropdown_3}
@@ -106,7 +107,25 @@ class MenuPage extends Component {
                         <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
                             {'Dobbelt espresso toppet med vand \n'}  
                         </Text>
-                        
+
+                        <Text style={{textAlign: 'center'}}>
+                                Vægt: 270 gram 
+                                ingredienser: espresso
+                        </Text>
+
+                        <Text style={{textAlign: 'center', fontStyle: 'italic'}}>
+                            {'\n\nNæringsværdi pr. kop: \n'}  
+                        </Text>
+
+                        <Text style={{textAlign: 'center'}}>
+                                Energi kj/Kcal: 0/0 {'\n'}
+                                Kulhydrater: 0g {'\n'}
+                                Hvoraf sukkerarter: 0g {'\n'}
+                                Protein: 0g {'\n'}
+                                Fedt: 0g {'\n'}
+                                Hvoraf mættet fedt: 0g {'\n'}
+                                Salt: 0g {'\n'}
+                        </Text>
                        
                     <Text style={{fontWeight: 'bold', paddingTop:20, paddingBottom: 10, textAlign: 'left', width: 315}}>
                         {'Choose extras:'}  

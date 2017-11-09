@@ -15,6 +15,7 @@ import {Actions} from 'react-native-router-flux';
 import Switch from 'react-native-customisable-switch';
 import * as firebase from 'firebase';
 import SearchPage from './SearchPage';
+import MenuPage from './MenuPage';
 
 const DEMO_PRODUCT_1 = ['2X Coffee \n\n', '1X Cacao \n\n', '2X Chokolate Cake \n - with chesse' ];
 
@@ -30,13 +31,23 @@ class CartPage extends Component {
       Alert.alert( 'Tillykke med din kaff');
       Actions.SearchPage(); 
     }
+    _BackPressed(){
+      Actions.MenuPage();
+    }
 
         render(){
             return(
-              <View> 
+              <View style={{marginTop: 30}}> 
                 <ScrollView>
                   
-                  <Text style={{fontWeight: 'bold', textAlign: 'center', paddingBottom: 30, paddingTop: 30, fontSize: 20}}>
+                  <Button
+                      style={{width: 50}}
+                      onPress={() => this._BackPressed()}
+                      title="   Back   "
+                      color="#4dd2ff"
+                  />
+
+                  <Text style={{fontWeight: 'bold', textAlign: 'left', fontSize: 20, paddingTop: 20, paddingLeft: 20, paddingBottom: 20}}>
                   {'Indkøbskurv'} 
                   </Text>
                   
@@ -44,19 +55,20 @@ class CartPage extends Component {
                       data={this.data}
                       renderItem={({item}) => 
                   <View>
-                    <Text style={styles.title}>{item.title} </Text>
+
+                   <Text style={styles.title}>{item.title} </Text>
 
                       <View style={styles.doubleContainer}>
                       
                           <Switch
-                          defaultValue={true}
-                          activeText={' To Go'}
-                          inactiveText={'Stay'}
-                          fontSize={16}
+                          defaultValue={false}
+                          activeText={'Stay'}
+                          inactiveText={'To Go'}
+                          fontSize={15}
                           activeTextColor={'rgba(255, 255, 255, 1)'}
                           inactiveTextColor={'rgba(255, 255, 255, 1)'}
-                          activeBackgroundColor={'rgba(50, 163, 50, 1)'}
-                          inactiveBackgroundColor={'rgba(137, 137, 137, 1)'}
+                          activeBackgroundColor={'rgba(137, 137, 137, 1)'}
+                          inactiveBackgroundColor={'rgba(50, 163, 50, 1)'}
                           activeButtonBackgroundColor={'rgba(255, 255, 255, 1)'}
                           inactiveButtonBackgroundColor={'rgba(255, 255, 255, 1)'}
                           switchWidth={100}
@@ -87,7 +99,7 @@ class CartPage extends Component {
                   </ScrollView>
                   
                   <TouchableHighlight onPress={() => this.onPress()} >
-                    <View style={{height: 300, width: 350, alignItems: 'center', justifyContent: 'center', paddingTop: 50}}>
+                    <View style={{height: 250, width: 350, alignItems: 'center', justifyContent: 'center', paddingTop: 40}}>
                                           
                           <Image
                             source={{uri: 'https://www.version2.dk/sites/v2/files/styles/large/public/mobile-pay-450x362.jpg?itok=ZU6kdwOz'}}
@@ -112,7 +124,8 @@ class CartPage extends Component {
             },
             title:{
               fontWeight: "800",
-              fontSize: 18
+              fontSize: 18,
+              paddingLeft: 20
             },
             body: {
               fontWeight: "200",
@@ -122,6 +135,8 @@ class CartPage extends Component {
               flex: 1,
               flexDirection: 'row',
               justifyContent: 'space-between',
+              paddingLeft: 20,
+              
             }
           })
 
