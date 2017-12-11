@@ -8,6 +8,8 @@ import {
   Keyboard,
   ScrollView,
   Button,
+  AsyncStorage,
+  Alert,
 } from 'react-native';
 
 import SearchBar from 'react-native-searchbar';
@@ -18,17 +20,13 @@ import MenuPage from './MenuPage';
 import Authentication from './Authentication';
 import ProfilePage from './ProfilePage';
 
-var items = [
- //'Espresso House Bla'
-]; 
-
-class searchPage extends Component {
+class SearchPage extends Component {
       
   constructor(props) {
     super(props);
     this.state = {
-      shops,
       results: [],
+      list: [],
       hideBack: true,
     };
     this._handleResults = this._handleResults.bind(this);
@@ -39,9 +37,18 @@ class searchPage extends Component {
     this.setState({ results });   
     
   }
+  _Logud(){
+    try {
+      AsyncStorage.removeItem('id_token');
+      Alert.alert('Log Out Successfully!');
+      Actions.Authentication();
+    } catch (error) {
+      console.log('AsyncStorage error: ' + error.message);
+    }
+
+  }
 
   onPress(result){
-    console.log('Result: '+result)
     Keyboard.dismiss(); 
     Actions.MenuPage({title: result}); 
   }
@@ -51,22 +58,17 @@ class searchPage extends Component {
 
   componentDidMount() {
     this.listenForItems(this.shopRef);
-    
   }
 
   listenForItems(shopRef) {
     shopRef.on('value', (snap) => {
 
       // get children as an array
-      var item = [];
+      var items = [];
       snap.forEach((child) => {
-        item.push({
-          title: snap.val().title,
-          _key: child.key
-        });
+        items.push(child.key);
       });
-      this.setState({ items: item });
-
+      this.setState({ list: items });
     });
   }
 
@@ -74,9 +76,9 @@ class searchPage extends Component {
     
         return (
                
-         <View style={{ marginTop: 50 }}>
+         <View style={{ marginTop: 40 }}>
          
-          <View style={{ marginTop: 55, marginLeft: 20, marginRight: 20, borderRadius: 10, backgroundColor: '#e6ffff', borderColor:'#000000', borderWidth:0.5 }}>
+          <View style={{ marginTop: 55, marginLeft: 20, marginRight: 20, borderRadius: 10, backgroundColor: '#e3e4e5', borderColor:'#000000', borderWidth:0.5 }}>
             
             {
               this.state.results.map((result, i) => { 
@@ -103,26 +105,28 @@ class searchPage extends Component {
         
         <SearchBar 
             ref={(ref) => this.searchBar = ref}
-            data={items}
+            data={this.state.list}
             handleResults={this._handleResults}
             showOnLoad
             hideBack= {this.state.hideBack}
             focusOnLayout = {false}
         />  
 
-        <View
-        style={{marginTop: 400, padding: 20}}>
+        <View style={{marginTop: 400, padding:10, flexDirection: 'row', width:360, justifyContent: 'space-between'}}>
 
-            <Button 
-                onPress={() => this._profileBtnPressed()}
-                title="   See your profile   "
-                color="#4dd2ff"
-            />
-        </View>
+                <Button  
+                    onPress={() => this._profileBtnPressed()}
+                    title="  See your profile  "
+                />
+                <Button 
+                    onPress={() => this._Logud()}
+                    title="        Log ud        "
+                />           
+          </View>
 
     </View>
         );
       }
     }
     
-module.exports = searchPage; 
+module.exports = SearchPage; 

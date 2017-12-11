@@ -9,6 +9,7 @@ import {
   Button,
   Alert,
   AppRegistry,
+  AsyncStorage,
 } from 'react-native';
 
 import {Actions} from 'react-native-router-flux';
@@ -19,8 +20,7 @@ import ImageSlider from 'react-native-elastic-image-slider';
 
 import Authentication from './Authentication';
 import CartPage from './CartPage';
-
-const DEMO_OPTIONS_1 = ['option 1', 'option 2', 'option 3', 'option 4', 'option 5', 'option 6', 'option 7', 'option 8', 'option 9'];
+import SearchPage from './SearchPage'; 
 
 const images = [
     {
@@ -33,7 +33,7 @@ const images = [
         height: 23,
         uri: 'http://beautyblog.dk/wp-content/uploads/2013/03/kaffe.jpg'
     },
-    {
+    /*{
         width: 25,
         height: 23,
         uri: 'https://scontent-arn2-1.xx.fbcdn.net/v/t31.0-8/16178980_10154077273121861_1262380282828419730_o.jpg?oh=7dc849f61836f170fe6c6a7b64dc125e&oe=5AAEFF08'
@@ -42,7 +42,7 @@ const images = [
         width: 40,
         height: 23,
         uri: 'http://makegoodcoffee.com/coffee-talk/wp-content/uploads/2009/01/espresso.jpg'
-    },
+    },*/
   ];
 
 class MenuPage extends Component {
@@ -50,17 +50,27 @@ class MenuPage extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            position: 0,
-            showMore: false,
-            scrollToEnd: false,
+            items: [],
+            extras: [],
+            menu: [],
+            products: [],
+            imgIndex: 0,
+            inCart: [],
+            selectedProduct: {},
+            selectedAddons: []
         };
         this._handlePosition = this._handlePosition.bind(this);
+        this.shopRef = firebase.database().ref().child('Shops').child(props.title).child('Catalog');
+        this.extraRef = firebase.database().ref().child('addOns');
     };
         
     
-  _handlePosition(position){
-        this.setState({ position });
-        console.log(position + 1); 
+  _handlePosition(imgIndex){
+      this.setState({ imgIndex: imgIndex, selectedProduct: this.state.products[imgIndex] });
+  }
+
+  _handleAddOns(selected){
+      this.setState({ selectedAddons: selected });
   }
 
   _dropdown_3_adjustFrame(style) {
@@ -69,12 +79,100 @@ class MenuPage extends Component {
   }
 
   onPress(){
-    Actions.CartPage();
+    Actions.CartPage({
+        inCart: this.state.inCart
+    });
+  }
+  onPressPlace(){
+      var order = {
+          name: this.state.selectedProduct.name,
+          price: this.state.selectedProduct.price,
+          shop: this.props.title,
+          addOns: [...this.state.selectedAddons]
+      };
+      var inCart = [...this.state.inCart, order];
+      this.setState({ inCart: inCart });
+      console.log(inCart);
+      console.log(this.state.inCart);
+      
+      Alert.alert('placed in cart!');
+  }
+
+  componentDidMount() {
+    let shop = this.props.title;
+    this.ListenForCatalog(this.shopRef);
+    this.ListenForAddOns(this.extraRef);
+  }
+
+  ListenForAddOns(extraRef) {
+
+    extraRef.on('value', (snap) => {
+
+      // get children as an array
+      var extra = [];
+      snap.forEach((child) => {
+            extra.push({
+                label: child.key,
+                value: child.key
+            });
+        });
+        this.setState({ extras: extra });
+    });
+  }
+
+  displayCatalog(idx, value) {
+    var products = [];
+    for(var key in this.state.items) {
+        if(this.state.items.hasOwnProperty(key)) {
+            let item = this.state.items[key];
+            if(item.cat == value){
+                products.push(item);
+            }  
+        }
+    }
+    this.setState({ products: products });
+  }
+
+  ListenForCatalog(shopRef) {
+    shopRef.on('value', (snap) => {
+
+      // get children as an array
+      var items = [];
+      var menu = [];
+      snap.forEach((child) => {
+        child.forEach((product) => {
+            items.push({
+                cat: child.key,
+                name: product.key,
+                desc: product.val().Description,
+                price: product.val().Price
+            });
+        });
+        
+        menu.push(child.key);
+      });
+      this.setState({ items: items, menu: menu });
+
+    });
+  }
+  _Logud(){
+    try {
+        AsyncStorage.removeItem('id_token');
+        Alert.alert('Log Out Successfully!');
+        Actions.Authentication();
+      } catch (error) {
+        console.log('AsyncStorage error: ' + error.message);
+      }
+  
+  }
+  _backBtn(){
+    Actions.SearchPage();
   }
 
   render() {
     return (
       <View style={styles.container}>
+
         <View style={styles.row}>
           <ScrollView ref={el => this._scrollView = el}
                       style={styles.scrollView}
@@ -82,16 +180,26 @@ class MenuPage extends Component {
                       showsVerticalScrollIndicator={true}
                       scrollEventThrottle={1}>
                 
-                  <Text style={{fontWeight: 'bold', textAlign: 'center', paddingBottom: 20, paddingTop: 50}}>
+                      <View style={{padding: 10, flex: 1, flexDirection: 'row', marginTop: 40, width:360, justifyContent: 'space-between',}}>
+                        <Button
+                            title="    back    "
+                            onPress={() => this._backBtn()}
+                        />
+                        <Button 
+                            onPress={() => this._Logud()}
+                            title="   Log ud   "
+                        />
+                    </View> 
+
+                  <Text style={{fontWeight: 'bold', textAlign: 'center', fontSize: 20, paddingBottom: 20, paddingTop: 15}}>
                         {this.props.title}
                     </Text>
             
             <ModalDropdown ref={el => this._dropdown_3 = el}
                            style={styles.dropdown_3}
-                           defaultValue = {'choose categori'}
-                           //som basis vises de mest populære produkter - eller produkt gruppen fra en ende af. 
-                           
-                           options={DEMO_OPTIONS_1}
+                           defaultValue = {this.state.menu[0]}
+                           onSelect = {this.displayCatalog.bind(this)}
+                           options={this.state.menu}
                            adjustFrame={style => this._dropdown_3_adjustFrame(style)}
                            dropdownTextStyle={styles.dropdown_3_dropdownTextStyle}
                            dropdownTextHighlightStyle={styles.dropdown_3_dropdownTextHighlightStyle}
@@ -100,58 +208,40 @@ class MenuPage extends Component {
                     <View style={{marginTop: 0, padding: 20, width: 400}}>
                         <ImageSlider
                             images={images}
-                            onPositionChanged = {this._handlePosition}
+                            onPositionChanged = {this._handlePosition}                          
+
                         />
                     </View>
 
                         <Text style={{textAlign: 'center', fontWeight: 'bold'}}>
-                            {'Dobbelt espresso toppet med vand \n'}  
+                            {(this.state.products.length > 0)?this.state.products[this.state.imgIndex].name:'Select a product'}  
                         </Text>
 
                         <Text style={{textAlign: 'center'}}>
-                                Vægt: 270 gram 
-                                ingredienser: espresso
+                                {(this.state.products.length > 0) ?this.state.products[this.state.imgIndex].desc: ''}
                         </Text>
 
                         <Text style={{textAlign: 'center', fontStyle: 'italic'}}>
-                            {'\n\nNæringsværdi pr. kop: \n'}  
+                            {(this.state.products.length > 0) ? this.state.products[this.state.imgIndex].price: ''}  
                         </Text>
 
-                        <Text style={{textAlign: 'center'}}>
-                                Energi kj/Kcal: 0/0 {'\n'}
-                                Kulhydrater: 0g {'\n'}
-                                Hvoraf sukkerarter: 0g {'\n'}
-                                Protein: 0g {'\n'}
-                                Fedt: 0g {'\n'}
-                                Hvoraf mættet fedt: 0g {'\n'}
-                                Salt: 0g {'\n'}
-                        </Text>
-                       
                     <Text style={{fontWeight: 'bold', paddingTop:20, paddingBottom: 10, textAlign: 'left', width: 315}}>
                         {'Choose extras:'}  
                     </Text>
                         
                         <CheckboxGroup
                             style={styles.doubleContainer}
-                            callback={(selected) => { console.log(selected) }}
+                            callback={this._handleAddOns.bind(this)}
                             iconColor={"#00a2dd"}
                             iconSize={40}
                             checkedIcon="ios-checkbox-outline"
                             uncheckedIcon="ios-square-outline"
-                            checkboxes={[
-                                {
-                                label: "Bajer", // label for checkbox item 
-                                value: 1, // selected value for item, if selected, what value should be sent? 
-                                },
-                                {
-                                label: "Yak",
-                                value: 2
-                                },
-                                {
-                                label: "Soya", 
-                                value: 3,  
-                                },
-                            ]}
+                            
+                            //får ikke fat i data?
+                            checkboxes={
+                                this.state.extras
+                            }
+                            
                             labelStyle={{
                                 color: '#333',
                                 margin: 10,
@@ -167,14 +257,13 @@ class MenuPage extends Component {
             <View style={styles.doubleContainer1}>
                 <Button
                     title="  place in cart "
-                    color="#4dd2ff"
-                    
+                    onPress={this.onPressPlace.bind(this)}
                 />
 
                 <Button
+                //gemme index på product der skal føres videre når knap er trykket. 
                     onPress={() => this.onPress()}
                     title="   Go to cart   "
-                    color="#4dd2ff"
                 />
             </View>
         </ScrollView>
@@ -200,7 +289,7 @@ const styles = StyleSheet.create({
     
   },
   contentContainer: {
-    minHeight: 300,
+    minHeight: 200,
     alignItems: 'center',
     justifyContent: 'center',
   },
@@ -214,6 +303,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 10,
   },
+
   dropdown_3_dropdownTextStyle: {
     backgroundColor: '#4dd2ff',
     color: '#fff',

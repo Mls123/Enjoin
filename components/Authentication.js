@@ -5,6 +5,7 @@ import * as firebase from 'firebase';
 
 import styles from '../styles';
 import SearchPage from './SearchPage';
+import OrderView from './OrderView';
 
 const {
   Alert,
@@ -42,9 +43,15 @@ class Authentication extends Component {
         AsyncStorage.setItem('id_token', idToken);
         console.log(idToken);
         //Alert.alert( 'Sign In Successfully!', 'Click the button to go to Home Page!');
-        Actions.SearchPage();
-        Keyboard.dismiss();
+
+      if(email == 'admin@admin.dk'){
+          Actions.OrderView(); 
+    
+        } else 
+          Actions.SearchPage();
+          Keyboard.dismiss();
       })
+      
       .catch((err) => {
         this.setState({ error: 'Failed to obtain user ID token.'+err, loading: false });
       });

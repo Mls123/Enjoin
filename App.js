@@ -8,7 +8,7 @@ import SearchPage from './components/SearchPage';
 import MenuPage from './components/MenuPage';
 import CartPage from './components/CartPage';
 import ProfilePage from './components/ProfilePage';
-import OrderVIew from './componentsShop/OrderView';
+import OrderView from './components/OrderView';
 
 const firebaseConfig = {
   apiKey: "AIzaSyDiJkAGmoG-zplJQOf78HRfqajREF0bDqg",
@@ -19,7 +19,7 @@ const firebaseConfig = {
   messagingSenderId: "253129759594"
 };
 const firebaseApp = firebase.initializeApp(firebaseConfig);
-console.ignoredYellowBox = [];
+//console.ignoredYellowBox = [];
 
 export default class App extends Component {
   constructor() {
@@ -79,7 +79,7 @@ export default class App extends Component {
               title='ProfilePage'
             />
             <Scene
-              component={OrderVIew}
+              component={OrderView}
               initial={this.state.hasToken}
               hideNavBar={true}
               key='OrderView'

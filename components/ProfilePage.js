@@ -15,6 +15,7 @@ import {Actions} from 'react-native-router-flux';
 import * as firebase from 'firebase';
 import SearchPage from './SearchPage';
 import styles from '../styles';
+import Authentication from './Authentication';
 
 class ProfilePage extends Component {
     
@@ -34,6 +35,16 @@ class ProfilePage extends Component {
         Keyboard.dismiss();
         Actions.SearchPage();
       }
+      _Logud(){
+        try {
+          AsyncStorage.removeItem('id_token');
+          Alert.alert('Log Out Successfully!');
+          Actions.Authentication();
+        } catch (error) {
+          console.log('AsyncStorage error: ' + error.message);
+        }
+    
+      }
 
       componentDidMount() {
         let user = firebase.auth().currentUser; 
@@ -48,7 +59,6 @@ class ProfilePage extends Component {
             Name: snap.val().Name,
             birthday: snap.val().birthday,
             uid: snap.key
-            //type: snap.val().type,
 
           })
         })
@@ -59,7 +69,7 @@ class ProfilePage extends Component {
         this.profileRef.child(this.state.uid).update({
           Name: this.state.Name,
           birthday: this.state.birthday,
-          //type: this.state.type
+  
         })
         .then(() => {
           this.setState({ loading: false });
@@ -81,17 +91,22 @@ class ProfilePage extends Component {
             render() {
               return (
                 <View 
-                  style={{marginTop: 50, padding: 20}}>
+                  style={{marginTop: 40}}>
+                      
+                  <View style={{padding:10, flexDirection: 'row', width:360, justifyContent: 'space-between'}}>
 
-                <Button
-                    style={{width: 60}}
-                    onPress={() => this._backBtn()}
-                    title="   Back   "
-                    color="#4dd2ff"
-                />
+                      <Button
+                          title="    back    "
+                          onPress={() => this._backBtn()}
+                      />
+                      <Button 
+                        onPress={() => this._Logud()}
+                        title="    Log ud    "
+                      /> 
+                      </View>
 
                 <Text style={{textAlign: 'center', paddingBottom: 20, paddingTop: 20, }}>
-                Name and birthday can always be adjusted, simply by changing the text below.  
+                Name and birthday can always be adjusted, simply by changing the text below and click update.  
                 </Text>
             
                     <TextInput
