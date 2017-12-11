@@ -34,6 +34,7 @@
     "react-native-modal-dropdown": "^0.5.0",
     "react-native-redux-router": "^1.0.7",
     "react-native-router-flux": "^3.38.0",
-    "react-native-searchbar": "^1.13.0"
+    "react-native-searchbar": "^1.13.0",
+    "react-native-elastic-image-slider": "^1.0.0"
   }
 }
