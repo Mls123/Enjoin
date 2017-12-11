@@ -1,0 +1,13 @@
+
+** The app should be runned in Expo. 
+
+Coffee shop login: 
+username: admin@admin.dk
+password: 123456
+
+Customer login: 
+username 1: 1@gmail.dk
+password: 123456
+
+username 2: 2@gmail.dk
+password: 123456
